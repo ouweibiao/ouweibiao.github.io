@@ -3,7 +3,7 @@
 
 本项目是在matery原主题[hexo-theme-matery](https://github.com/blinkfox/hexo-theme-matery)的基础上删减并修改而来的。并没有增加什么重要代码，只是做的个人配置，喜欢这个主题的样式，但又不需要其中的一些功能，因此做了删减，添加了一点自己需要的内容。
 
-- [个人博客演示](https://cfxin.github.io/)，如果你想快速搭建一个和我的风格类似的博客网站，可以下载该项目，按照[教程](https://www.yuque.com/chengbudong/zvpkuh/okclg4)的2.3进行搭建。
+- [个人博客演示](https://ouweibiao.github.io/)，如果你想快速搭建一个和我的风格类似的博客网站，可以下载该项目，按照[教程](https://www.yuque.com/chengbudong/zvpkuh/okclg4)的2.3进行搭建。
 
 <font color=#ee3f4d>注意：</font>若需要该主题的全部功能或做自己的定制，强烈建议去原作者仓库按照指导使用。
 
@@ -28,4 +28,7 @@
 - 增加了今日诗词。
 - 增加了动态标签页标题。
 - 解决了使用 hexo-prism-plugin 代码高亮插件导致的花括号不显示问题。
+
+
+本仓库修改自[cfxin的开源项目](https://github.com/cfxin/Blog-matery.git)
 
