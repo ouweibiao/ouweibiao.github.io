@@ -4,8 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="pdf, 软件工程师 自动驾驶 强化学习">
-    <meta name="description" content="软件工程师 | 自动驾驶">
+    <meta name="keywords" content="C++基础知识点总结, 软件工程师 自动驾驶 强化学习">
+    <meta name="description" content="语法相关什么是左值引用和右值引用可取地址的是左值，不可取地址的是右值。左值引用是借用，右值引用是接管
+C++move的作用和原理？核心作用：将对象的资源所有权从一个对象“转移”到另一个对象，从而避免不必要的深拷贝，提高程序性能。原理：仅仅是">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +18,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>pdf | Webberの博客</title>
+    <title>C++基础知识点总结 | Webberの博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -324,12 +325,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/35.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">pdf</h1>
+                    <h1 class="description center-align post-title">C++基础知识点总结</h1>
                 </div>
             </div>
         </div>
@@ -457,28 +458,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-02-24
+                    2025-02-19
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-02-24
+                    2025-05-07
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    0
+                    5.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    21 分
                 </div>
                 
 
@@ -498,7 +499,425 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="语法相关"><a href="#语法相关" class="headerlink" title="语法相关"></a>语法相关</h1><h2 id="什么是左值引用和右值引用"><a href="#什么是左值引用和右值引用" class="headerlink" title="什么是左值引用和右值引用"></a>什么是左值引用和右值引用</h2><p>可取地址的是左值，不可取地址的是右值。<br>左值引用是借用，右值引用是接管</p>
+<h2 id="C-move的作用和原理？"><a href="#C-move的作用和原理？" class="headerlink" title="C++move的作用和原理？"></a>C++move的作用和原理？</h2><p>核心作用：将对象的资源所有权从一个对象“转移”到另一个对象，从而避免不必要的深拷贝，提高程序性能。<br>原理：仅仅是类型转换工具，不会实际移动数据，真正的移动逻辑由类的 移动构造函数 或 移动赋值运算符 决定。</p>
+<h2 id="static关键字的作用？什么场景下用？"><a href="#static关键字的作用？什么场景下用？" class="headerlink" title="static关键字的作用？什么场景下用？"></a>static关键字的作用？什么场景下用？</h2><p>static用于控制变量或函数的作用域和生命周期。</p>
+<ol>
+<li>修饰局部变量（函数内部）</li>
+</ol>
+<ul>
+<li>在函数作用域内可见，但只会初始化一次，生命周期贯穿整个程序。</li>
+<li>使用场景：主要用于记录函数调用次数，实现懒加载<br>```<br>#include <iostream><br>using namespace std;</li>
+</ul>
+<p>void func() {<br>    static int count = 0; // 只在第一次调用func时初始化<br>    cout &lt;&lt; “Count is: “ &lt;&lt; count &lt;&lt; endl;<br>    count++;<br>}</p>
+<p>int main() {<br>    for(int i = 0; i &lt; 5; i++) {<br>        func(); // 每次调用都会显示增加的count值<br>    }<br>    return 0;<br>}</p>
+<pre><code>2. 修饰全部变量（文件作用域）
+* 限制变量/函数的作用域只在当前源文件中，避免全局命名冲突
+* 使用场景：模块化开发中隐藏模块实现细节
+</code></pre>
+<p>// file1.cpp<br>static int count = 10; // count变量只能在file1.cpp中访问<br>static void func() { // func函数只能在file1.cpp中访问<br>    cout &lt;&lt; “Function in file1” &lt;&lt; endl;<br>}<br>// file2.cpp<br>extern int count; // 这里会导致编译错误，因为count是static的，不能在file2.cpp中访问</p>
+<p>void anotherFunc() {<br>    func(); // 这里也会导致编译错误，因为func是static的，不能在file2.cpp中访问<br>}</p>
+<pre><code>
+3. 修饰类的成员变量
+* 被修饰的成员变量属于类而不是变量，所有对象共享一份数据
+* 使用场景：计数器、全局配置、缓存等（想要类的所有对象共享某个变量）
+4. 修饰类的成员函数
+* 被修饰的成员函数不依赖类对象就能调用
+* 使用场景：访问静态变量、工具函数、工厂函数等（想要在没有某个类实例的情况下就访问某个函数）
+</code></pre>
+<p>#include <iostream><br>using namespace std;</p>
+<p>class MyClass {<br>public:<br>    static int staticValue; // 静态成员变量<br>    static void staticFunction() { // 静态成员函数<br>        cout &lt;&lt; “Static function called” &lt;&lt; endl;<br>    }<br>};</p>
+<p>int MyClass::staticValue = 10; // 静态成员变量的初始化</p>
+<p>int main() {<br>    MyClass::staticFunction(); // 调用静态成员函数<br>    cout &lt;&lt; MyClass::staticValue &lt;&lt; endl; // 访问静态成员变量<br>    return 0;<br>}</p>
+<pre><code>
+## const关键字的作用？谈谈你是怎么理解const的？
+1. 作用：const最主要的作用就是声明一个变量为常量，这个变量在初始化之后就不被修改，不仅可以用于普通常量，还可以用于指针、引用、成员函数、成员变量等
+* 定义普通常量：修饰基本数据类型的变量时，表示常量，对应的值不能被修改。  
+`const int MAX_SIZE = 100; // MAX_SIZE是一个常量，其值不能被修改
+`
+* 修饰指针：分多钟情况，比如指针本身是常量，指针指向的数据是常量，或者指针本身及其指向的数据都是常量。
+    * 指向常量的指针：不能通过该指针修改该常量的值  
+    `const int* ptr = &amp;x; // ptr是一个指向常量的指针，不能通过ptr修改x的值`
+    * 指针常量：指针指向的地址不能被修改，但可以通过该指针修改其所指向的值（如果指向的值不是常量）  
+    `int* const ptr = &amp;x; // ptr是一个常量，ptr的值（地址）不能被修改，但x的值可以被修改`
+    * 指向常量的常量指针：指针本身是常量，且指针指向的内容也是常量。
+    `const int* const ptr = &amp;x; // ptr的值和ptr指向的值都不能被修改`
+* 修饰引用：const修饰引用的时候，一般用作函数参数，表示函数修改传递的参数值
+`void func(const int&amp; a) &#123; // a是一个对常量的引用，不能通过a修改其值  
+    // ...  
+&#125;
+`
+* 修饰类成员函数：表示函数不会修改类的任何成员变量，除非这些变量被声明为mutable
+`class MyClass &#123;  
+public:  
+    void myFunc() const &#123; // myFunc是一个const成员函数，它不会修改类的任何成员变量  
+        // ...  
+    &#125;  
+&#125;;
+`
+* 修饰类成员变量：表示生命周期内不可改动此值
+`class MyClass &#123;  
+public:  
+    const int a = 5;
+&#125;;
+`
+
+## define和const的区别？
+1. 区别：
+* #define是一个预处理指令，用于定义宏，只在预处理阶段进行文本替换，并且不进行类型检查，出现问题之后调试比较困难。
+* const是一个关键字，用于定义常量，在编译时确定类型和值，并且具有类型安全的特点（定义常量优先使用const）
+1. 扩展知识
+* 作用机制
+    * `#definde x 10`只是在预处理阶段，将所有出现的x替换为10,不进行类型检查，因此#define可以用于定义常量和函数
+    * `const int x = 10`在编译阶段真实的定义了一个类型为int的常量x并赋值为10,保留了类型信息，也能进行常规的语法和语义检测
+* 类型安全
+    * `#define`没有类型，只是进行文本替换
+    * `const`有完整的类型信息
+* 作用域
+    * `#define`定义的宏在整个源文件中有效
+    * `const`只在指定的作用域内有效
+
+## inline关键字的作用？有什么优缺点？
+inline的作用是建议编译器将函数条用替换为函数体，以减少函数调用的开销，和宏比较类似。使用inline函数的目的一定是希望可以提高程序的运行效率，特别是那些频繁调用的小函数。
+1. 基础用法
+在定义的函数前加inline
+2. 底层原理
+正常在调用函数前要进行参数压栈、跳转、返回值处理，会有一定的开销，而使用内联函数后，编译器在编译阶段把函数调用的地方用函数体内容展开替换掉，跟宏替换类似。（不同的是inline有类型检查，更加安全）
+1. 应用场景
+* 小函数写在类内或者头文件中自动视为inline，或者需要避免重复定义时
+* 需要对频繁调用的小函数进行内联，避免压栈时出栈开销。（提升性能）
+2. 内联函数和#define的区别
+* 宏定义实在预处理阶段进行文本替换，而内联函数在编译阶段展开。
+* 内联函数有作用域控制和类型安全，宏没有这种特性。
+* 内联函数调试起来更加方便。
+3. 注意事项
+* 函数体过于复杂或者递归调用的时候不要用内联函数
+
+## sizeof和strlen的区别？
+sizeof用于计算类型大小，strlen用于计算字符串长度。
+1. 区别
+* sizeof是一个编译时运算符，用于获取一个类型或对象的大小（以字节为单位），sizeof在编译时计算结果，不涉及实际内容。
+* strlen是一个库函数，只能用于计算C风格字符串的长度（不包括终止运算符‘\0’，且不能用于string类型，身string类型有自己的成员函数size()和length()）。strlen在于形式计算结果，因为他需要遍历字符串内容。
+
+2. 扩展知识
+* sizeof的应用
+    * 用于计算基础类型的大小
+    * 用于计算结构体或类的内存占用
+    * 对于静态数组，可以获取整个数组的内存大小
+    * 对于指针，sizeof返回的是指针本身的大小而不是指针 指向内存区域的大小。
+    ```
+    int *p = new int[10];
+    std::cout &lt;&lt; sizeof(p); // 这会返回指针的大小，通常是4或8个字节，具体取决于系统架构。
+    ```
+* strlen的应用
+    * 对于一些特定的字符数组，strlen特别有用，比如`char arr[] = &quot;hello&quot;;` strlen(arr)返回的结果是5。
+    * strlen不能用于不以字符终结符&#39;\0&#39;结尾的字符数组，会导致未定义行为。  
+    ```
+    char arr[5] = &#123;&#39;H&#39;, &#39;e&#39;, &#39;l&#39;, &#39;l&#39;, &#39;o&#39;&#125;;
+    std::cout &lt;&lt; strlen(arr); // 这会导致未定义行为，因为没有终止符&#39;\0&#39;。
+    ```
+* 获取动态内存分配的大小
+    * 使用new动态分配的内存，sizeof不能直接获取分配内存的大小，需要在分配的时候显示的记录内存大小。  
+    ```
+    int main() &#123;
+    int n = 10;
+    int* arr = new int[n];
+    // std::cout &lt;&lt; &quot;Size of dynamic array: &quot;&lt;&lt; sizeof(arr) &lt;&lt; &quot; bytes&quot;&lt;&lt; std::endl; // 错误：这将输出指针的大小，而不是数组的大小
+    std::cout &lt;&lt; &quot;Size of dynamic array: &quot; &lt;&lt; n * sizeof(int) &lt;&lt; &quot; bytes&quot;&lt;&lt; std::endl; // 正确：手动计算数组大小
+    delete[] arr;
+    return 0;&#125;
+    ```
+* 空类的大小
+即使是空类也会有大小（不包含任何成员函数和成员变量），sizeof的返回值至少为一个字节（如果大小为 0，多个空类对象可能会拥有相同地址，违反 C++ 的对象模型）。
+
+
+## extern有什么作用？extern “C”有什么作用？
+1. extern主要有两个作用：
+* 声明变量的外部链接：当一个变量在一个文件中声明，当在另一个文件中定义时，可以用extern来告知编译器该变量在其他地方定义，避免编译器的编译错误。（声明变量或函数在别的文件中定义；告诉编译器这个符号在别处定义，连接时再去找）    
+    ```
+    // file1.cpp
+    int a = 10;
+
+    // file2.cpp
+    extern int a;  // 引用 file1.cpp 中定义的 a
+    ```
+* extern &quot;C&quot;：在导出C++函数符号时，通过该操作，可以保证导出的符号为C符号而不是C++符号，这样可以更好的做兼容，比如llvm编译器导出的库，通过C符号也可以让MSCV编译器正常使用。 （确保C++代码能正确链接到C语言编写的库） 
+    ```
+    // C 的头文件 example.h
+    void c_function();
+
+    // C++ 文件中使用
+    extern &quot;C&quot; &#123;
+        #include &quot;example.h&quot;
+    &#125;
+    ```
+
+## explicit关键字的作用？
+用于修饰构造函数或者转换函数，防止编译器进行隐式类型转换
+1. 应用场景
+* 构造函数只带一个参数但不希望发生隐式类型转换时使用
+* 提高代码安全性
+</code></pre>
+<p>class Foo {<br>public:<br>    explicit Foo(int x) : value(x) {}<br>private:<br>    int value;<br>};</p>
+<p>void func(Foo f) {<br>    // …<br>}</p>
+<p>int main() {<br>    Foo foo = 10;  // 错误，必须使用 Foo foo(10) 或 Foo foo = Foo(10)<br>    func(10);      // 错误，必须使用 func(Foo(10))<br>}</p>
+<pre><code>* 对于那些带有**默认参数**的复杂构造函数，explicit尤为重要，能防止隐式转换
+
+## final关键字的作用？
+防止类被继承或防止虚函数被覆盖。（防止继承和虚函数重写）
+1. 防止类被继承
+当一个类被声明为final，这个类不能被进一步集成继承。
+</code></pre>
+<p>class Base final {<br>    // 类的实现<br>};</p>
+<p>// 下面的代码会导致编译错误<br>class Derived : public Base {<br>    // 类的实现<br>};</p>
+<pre><code>
+2. 防止虚函数被覆盖
+当一个虚函数被声明为final,这个虚函数在派生类中不能被重新定义。  
+</code></pre>
+<p>class Base {<br>public:<br>    virtual void doSomething() final {<br>        // 函数实现<br>    }<br>};</p>
+<p>class Derived : public Base {<br>public:<br>    // 下面的代码会导致编译错误<br>    virtual void doSomething() override {<br>        // 函数实现<br>    }<br>};</p>
+<pre><code>3. 扩展知识
+
+
+## volatile关键字的作用？  
+
+## char *和const char *和char * const和const char * const的区别？  
+一个小技巧，从后往前读：
+* char *：指向char类型数据的指针
+* const char * ： *指向const char,指针本身可变，但是指向的数据不可变
+* char * const ：const修饰char * ，指针本身不可变，但是指针指向的的数据可变
+* const char * const： const修饰const char *，指针本身不可变，指向的数据本身也不可变
+
+## C++类定义中delete关键字和default关键字的作用？
+
+## this指针的作用？可以使用delete this吗？
+
+
+
+
+
+
+# 基础知识点
+## 什么是深拷贝浅拷贝
+copy是深拷贝：复制内容，资源独立。
+move是浅拷贝：转移资源所有权，源对象应不再使用（但必须处于有效状态）。
+
+## C++中什么是移动语义和完美转发？
+
+## 三种智能指针的使用场景？
+### unique_ptr
+这是一种独占所有权的智能指针，意味着同一时间只能有一个unique_ptr指向一个特定的对象。但unique_ptr被销毁时，他所指向的对象也会被销毁。
+使用场景：
+* 但你需要确保一个对象智能被一个指针所拥有时
+* 需要自动管理资源（如文件句柄和互斥锁时） 
+### shared_ptr
+共享所有权的智能指针，多个shared_ptr可以指向同一个对象，内部引用采用计数的方法统计指向同一个对象的指针数量，只有计数为0时，对象才会被销毁。
+使用场景：
+* 多个所有者之间共享对象
+* 需要通过复制构造函数和赋值操作符来复制智能指针时
+### weak_ptr
+weak_ptr是一种不用有对象所有权的智能指针，他指向一个有shared_ptr管理的对象，用于解决shared_ptr之间的循环引用问题。
+使用场景：
+* 访问但不拥有
+* 解决shared_ptr之间循环引用的问题
+* 注意weak_ptr和shared_ptr肯定要一起搭配使用
+### 扩展知识
+1. 使用建议：
+    * 尽量使用智能指针来管理内存，而非裸指针，因为RAII机制在很多时候会靠谱很多
+    * 如果没有多个所有者共享内存的需求，建议优先使用unique_ptr管理内存，因为他相对shared_ptr更加轻量
+    * 使用shared_ptr一定要注意是否会造成循环引用问题，因为这会导致内存泄漏
+    * shared_ptr的引用技术是安全的，但是里面的对象不是线程安全的，这点要区分
+1. 为什么unique_ptr只能移动，不可复制？
+因为把拷贝构造函数和赋值运算符都标记为了delete（= delete 是 C++11 引入的特性，用于显式禁用函数的默认实现。），只能移动是因为C++11支持移动语义，可以通过move操作来转移所有权。
+</code></pre>
+<p>std::unique_ptr<T> a(new T);<br>std::unique_ptr<T> b = std::move(a); // a放弃所有权，b接管资源</p>
+<pre><code>2. shared_ptr的原理
+核心原理就是通过引用计数机制来管理资源生命周期。
+* 每个 shared_ptr 内部都维护一个 控制块（control block），控制块中包含：
+* 引用计数（use_count）：有多少个 shared_ptr 正在共享这块资源。
+* 弱引用计数（weak_count）：有多少个 weak_ptr 在观察这块资源。
+* 资源指针：指向实际对象的原始指针。
+* 删除器（可选）：负责自定义释放资源的逻辑。
+3. 智能指针的缺点
+主要有两个缺点：  
+* 性能开销，需要额外的内存来存储控制块
+* 循环引用问题（AB之间相互引用，导致两者无法释放，出现内存泄漏）
+
+
+
+
+## C++11中有哪些新特性
+### auto类推导
+auto可以让编译器在编译时就推导出变量的类型。    
+</code></pre>
+<p>auto a = 10; // 10是int型，可以自动推导出a是int</p>
+<p>int i = 10;<br>auto b = i; // b是int型</p>
+<p>auto d = 2.0; // d是double型<br>auto f = <a href=""></a> { // f是啥类型？直接用auto就行<br>    return std::string(“d”);<br>}</p>
+<pre><code>使用场景：  
+1. 简单类型其实没有必要使用auto,复杂类型如lambda表达式类型和async函数的类型等
+</code></pre>
+<p>//lambda表达式<br>auto func = [](int a, int b) { return a + b; };<br>//STL迭代器简化<br>std::vector<int>::iterator it = vec.begin();<br>// 使用 auto 后：<br>auto it = vec.begin();</p>
+<pre><code>1. 配合范围for循环
+</code></pre>
+<p>for (auto val : vec) { … }</p>
+<pre><code>### 智能指针
+
+### RAII lock
+两种封装所lock_guard和unique_lock，都是采用了RAII的思想（在对象构造时获取资源，在对象析构时释放资源）
+1. std::lock_guard&lt;std::mutex&gt;
+简单快速，作用域结束时自动解锁
+</code></pre>
+<p>std::mutex mtx;<br>void func() {<br>    std::lock_guard<a href="std::mutex">std::mutex</a> lock(mtx); // 上锁<br>    // 临界区代码<br>} // 离开作用域，自动解锁</p>
+<pre><code>1. std::unique_lock&lt;std::mutex&gt;
+更加灵活，支持延迟上锁，手动解锁，条件变量等
+</code></pre>
+<p>std::unique_lock<a href="std::mutex">std::mutex</a> lock(mtx);<br>cond_var.wait(lock); // 用于等待条件变量</p>
+<pre><code>1. 两种锁的区别
+lock_guard 更轻便适合简单加锁场景，而 unique_lock 更灵活，适合需要条件变量或手动控制锁行为的复杂并发逻辑。
+### std：：thread
+std：：thraed是C++11引入的标准线程类，用于创建和管理操作系统级别的线程。
+1. 常用接口
+join：阻塞线程知道子线程结束
+detach：让子线程独立运行，主线程无需等待
+joinable：判断线程是否可被join
+get_id：获取线程ID
+1. 注意事项
+* 线程必须join或者detach,否则进程会奔溃。
+* 不能拷贝线程对象但是可以移动
+</code></pre>
+<p>std::thread t1(func);<br>std::thread t2 = std::move(t1); // 合法</p>
+<pre><code>
+### 左值和右值
+等号左边左值，等号右边右值，可以取地址有名字的是左值，不能取地址无名字的是右值
+### std：：function
+std::function是C++11提供的通用可调用对象包装器，可以存储普通函数、函数指针、Lambda表达式、函数对象（重载了operator（）的类）等,使用fuction可以完全替代以前那种繁琐的函数指针设计。
+`std::function&lt;返回类型(参数类型...)&gt; func;`
+当给std::fuction填入合适的参数表和返回值后,他就变成了可以容纳所有这一类调用方式的函数封装器,同时std::fuction还可以作为回调函数,例子如下:
+</code></pre>
+<p>std::function&lt;void(int)&gt; f; // 这里表示function的对象f的参数是int，返回值是void<br>#include <functional><br>#include <iostream></p>
+<p>struct Foo {<br>   Foo(int num) : num_(num) {}<br>   void print_add(int i) const { std::cout &lt;&lt; num_ + i &lt;&lt; ‘\n’; }<br>   int num_;<br>};</p>
+<p>void print_num(int i) { std::cout &lt;&lt; i &lt;&lt; ‘\n’; }</p>
+<p>struct PrintNum {<br>   void operator()(int i) const { std::cout &lt;&lt; i &lt;&lt; ‘\n’; }<br>};</p>
+<p>int main() {<br>   // 存储自由函数<br>   std::function&lt;void(int)&gt; f_display = print_num;<br>   f_display(-9);</p>
+<p>   // 存储 lambda<br>   std::function&lt;void()&gt; f_display_42 = <a href=""></a> { print_num(42); };<br>   f_display_42();</p>
+<p>   // 存储到 std::bind 调用的结果<br>   std::function&lt;void()&gt; f_display_31337 = std::bind(print_num, 31337);<br>   f_display_31337();</p>
+<p>   // 存储到成员函数的调用<br>   std::function&lt;void(const Foo&amp;, int)&gt; f_add_display = &amp;Foo::print_add;<br>   const Foo foo(314159);<br>   f_add_display(foo, 1);<br>   f_add_display(314159, 1);</p>
+<p>   // 存储到数据成员访问器的调用<br>   std::function&lt;int(Foo const&amp;)&gt; f_num = &amp;Foo::num_;<br>   std::cout &lt;&lt; “num_: “ &lt;&lt; f_num(foo) &lt;&lt; ‘\n’;</p>
+<p>   // 存储到成员函数及对象的调用<br>   using std::placeholders::_1;<br>   std::function&lt;void(int)&gt; f_add_display2 = std::bind(&amp;Foo::print_add, foo, _1);<br>   f_add_display2(2);</p>
+<p>   // 存储到成员函数和对象指针的调用<br>   std::function&lt;void(int)&gt; f_add_display3 = std::bind(&amp;Foo::print_add, &amp;foo, _1);<br>   f_add_display3(3);</p>
+<p>   // 存储到函数对象的调用<br>   std::function&lt;void(int)&gt; f_display_obj = PrintNum();<br>   f_display_obj(18);<br>}</p>
+<pre><code>
+### lambda表达式
+`auto func = [capture] (params) opt -&gt; ret &#123; func_body; &#125;;
+`
+* capture：捕获外部变量的方式，如值捕获[=]，引用捕获[&amp;]
+* parameters:形参列表
+* opt：函数选项（mutable，编译器实现时会去掉 operator() 的 const 限定，允许修改类的成员变量副本。）
+* ret：返回类型（可省略，由编译器推导）
+lambda表达式定义了一个匿名函数,可以捕捉一定范围的变量在函数内部使用。
+1. 底层实现原理
+lambda表达式本质上是一个匿名类的语法糖，编译器会将lambda表达式转变成一个带有operator()的类对象，并根据捕获方式生成相应的成员变量。
+2. 如何搭配std::fuction使用
+`std::function&lt;int(int)&gt; func = [x](int a) &#123; return x + a; &#125;;
+`
+把lambda赋值给std::fuction，编译器生成了lambda类对象，std::function 接收并用类型擦除封装该类对象，使其变为多态可调用体。
+
+
+## 野指针和悬挂指针是什么？有什么区别？
+
+## 什么是内存对齐？为什么要使用内存对齐？
+
+## 四种类型转换的使用场景？
+
+## 什么是多态？简单介绍下多态？
+
+## 虚函数的原理？
+
+## 构造函数可以是虚函数吗？
+
+## 析构函数一定要是虚函数吗？
+
+## 什么场景下需要使用到移动构造函数和移动赋值运算符？
+
+## 什么是虚继承？
+
+## 什么是函数重载？有什么优点？和重写有什么区别？
+
+## 什么是运算符重载？
+
+## struct和class的区别？
+
+## struct和union的区别？如何使用union做优化？
+
+## using和typedef的区别？
+
+## enum和enum class的区别？
+
+## new和malloc的区别？delete和free的区别？
+
+
+## C++中vector的原理？resize和reserve的区别是什么？size和capacity的区别是什么？
+
+## deque的原理是什么？它内部是如何实现的？
+
+## map和unordered_map的区别？分别在什么场景下使用？
+
+## list的使用场景是？
+
+## C++中的RAII是什么？使用场景是？  
+
+## lock_guard和unique_lock的区别？
+
+## C++中thread的jon和detach的区别？
+
+## jthread和thread的区别？  
+
+## memcpy和memmove的区别？  
+
+## function、bind、lambda在什么情景下使用？
+
+## 在C++中使用模板的优缺点？  
+
+## 函数模板和模板又什么区别？  
+
+## 模板中的SFINAE是什么？他的原则是？
+
+## strcpy和memcpy有什么区别？
+
+## 为什么要使用std：：array？它有什么优点？  
+
+## 堆内存和栈内存的区别？  
+
+## 栈溢出是什么？  
+
+## 什么是回调函数？为什么需要回调函数？  
+
+
+## 为什么使用nullptr而不是NULL？  
+
+## 什么是大端序什么是小端序？  
+
+## include &lt;a.h&gt;和include &quot;a.h&quot;的区别？  
+
+## C++是否可以include源文件？
+
+##  什么是深拷贝什么是浅拷贝？写一个拷贝构造函数？  
+
+## 命名空间有什么作用？如何使用？
+
+## 友元类和友元函数有什么作用？  
+
+## 如何设计一个线程安全的类？  
+
+## C++中如何调用C语言中的库？
+
+## 指针和引用的区别是？
+
+
+
+
+</code></pre>
+
                 
             </div>
             <hr/>
@@ -524,7 +943,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://ouweibiao.github.io/pdf/index.html">https://ouweibiao.github.io/pdf/index.html</a>
+                    <a href="https://ouweibiao.github.io/ji-chu-wen-ti.html">https://ouweibiao.github.io/ji-chu-wen-ti.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -731,18 +1150,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/pdf/index.html">
+                <a href="/zai-archlinux-xia-shi-yong-latex.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/35.png" class="responsive-img" alt="pdf">
+                        <img src="/medias/featureimages/53.png" class="responsive-img" alt="在Archlinux下使用Latex">
                         
-                        <span class="card-title">pdf</span>
+                        <span class="card-title">在Archlinux下使用Latex</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -752,9 +1170,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-24
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-02-19
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -763,7 +1181,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
@@ -771,16 +1188,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/pdf/index.html">
+                <a href="/ce-shi.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/35.png" class="responsive-img" alt="pdf">
+                        <img src="/medias/featureimages/47.png" class="responsive-img" alt="测试">
                         
-                        <span class="card-title">pdf</span>
+                        <span class="card-title">测试</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -791,17 +1208,28 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-02-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-12-01
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            Webber Ou
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
+                                    随笔
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%97%A5%E5%B8%B8/">
+                        <span class="chip bg-color">日常</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -966,6 +1394,13 @@
 
 </main>
 
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+    });
+</script>
 
 
 
