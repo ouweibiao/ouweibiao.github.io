@@ -5,13 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="C++基础知识汇总, 软件工程师 自动驾驶 强化学习">
-    <meta name="description" content="语法相关什么是左值引用和右值引用
+    <meta name="description" content="什么是左值引用和右值引用
 可取地址的是左值，不可取地址的是右值。
 左值引用是借用，右值引用是接管。
 
 C++ move 的作用和原理？
 核心作用：将对象的资源所有权从一个对象“转移”到另一个对象，避免不必要的深拷贝，提高程序性能。
-">
+原理：s">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -477,14 +477,14 @@ C++ move 的作用和原理？
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    8 分
+                    10 分
                 </div>
                 
 
@@ -504,7 +504,7 @@ C++ move 的作用和原理？
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="语法相关"><a href="#语法相关" class="headerlink" title="语法相关"></a>语法相关</h1><h2 id="什么是左值引用和右值引用"><a href="#什么是左值引用和右值引用" class="headerlink" title="什么是左值引用和右值引用"></a>什么是左值引用和右值引用</h2><ul>
+                <h2 id="什么是左值引用和右值引用"><a href="#什么是左值引用和右值引用" class="headerlink" title="什么是左值引用和右值引用"></a>什么是左值引用和右值引用</h2><ul>
 <li>可取地址的是左值，不可取地址的是右值。</li>
 <li>左值引用是借用，右值引用是接管。</li>
 </ul>
@@ -703,7 +703,8 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
 <li><code>char * const</code>：指针常量，不可修改指针，可修改指向的数据。</li>
 <li><code>const char * const</code>：指针常量且指向常量。</li>
 </ul>
-<h2 id="C-类定义中-delete-关键字和-default-关键字的作用？"><a href="#C-类定义中-delete-关键字和-default-关键字的作用？" class="headerlink" title="C++ 类定义中 delete 关键字和 default 关键字的作用？"></a>C++ 类定义中 <code>delete</code> 关键字和 <code>default</code> 关键字的作用？</h2><h2 id="this-指针的作用？可以使用-delete-this-吗？"><a href="#this-指针的作用？可以使用-delete-this-吗？" class="headerlink" title="this 指针的作用？可以使用 delete this 吗？"></a><code>this</code> 指针的作用？可以使用 <code>delete this</code> 吗？</h2><h1 id="基础知识点"><a href="#基础知识点" class="headerlink" title="基础知识点"></a>基础知识点</h1><h2 id="什么是深拷贝和浅拷贝？"><a href="#什么是深拷贝和浅拷贝？" class="headerlink" title="什么是深拷贝和浅拷贝？"></a>什么是深拷贝和浅拷贝？</h2><ul>
+<h2 id="C-类定义中-delete-关键字和-default-关键字的作用？"><a href="#C-类定义中-delete-关键字和-default-关键字的作用？" class="headerlink" title="C++ 类定义中 delete 关键字和 default 关键字的作用？"></a>C++ 类定义中 <code>delete</code> 关键字和 <code>default</code> 关键字的作用？</h2><h2 id="this-指针的作用？可以使用-delete-this-吗？"><a href="#this-指针的作用？可以使用-delete-this-吗？" class="headerlink" title="this 指针的作用？可以使用 delete this 吗？"></a><code>this</code> 指针的作用？可以使用 <code>delete this</code> 吗？</h2><hr>
+<h2 id="什么是深拷贝和浅拷贝？"><a href="#什么是深拷贝和浅拷贝？" class="headerlink" title="什么是深拷贝和浅拷贝？"></a>什么是深拷贝和浅拷贝？</h2><ul>
 <li><strong>深拷贝</strong>（copy）：复制内容，资源独立。</li>
 <li><strong>浅拷贝</strong>（move）：转移资源所有权，源对象不再使用，但必须保持有效状态。</li>
 </ul>
@@ -765,9 +766,54 @@ std<span class="token operator">::</span>thread t2 <span class="token operator">
 <pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token operator">></span> add_x <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token keyword">return</span> x <span class="token operator">+</span> a<span class="token punctuation">;</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
 </code></pre>
 <hr>
+<h2 id="野指针和悬挂指针的区别？"><a href="#野指针和悬挂指针的区别？" class="headerlink" title="野指针和悬挂指针的区别？"></a>野指针和悬挂指针的区别？</h2><p>两者都可能导致程序出现不可预测的行为，但是他们有明显的区别：</p>
+<ul>
+<li><strong>野指针</strong>：一种未被初始化的指针，通常会指向一个随机的内存地址。（这个地址不可空）</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout<span class="token operator">&lt;&lt;</span> <span class="token operator">*</span>p <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><strong>悬挂指针</strong>：一个原本合法的指针，原但是指向的内存已被释放或重新分配，当访问此指针指向的内存时，会导致未定义行为，因为那块内存数据可能已经不是期望的数据了。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> <span class="token operator">*</span> p <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span><span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">;</span>
+
+  p <span class="token operator">=</span> p2<span class="token punctuation">;</span>
+  <span class="token keyword">delete</span> p2<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="如何避免野指针"><a href="#如何避免野指针" class="headerlink" title="如何避免野指针?"></a>如何避免野指针?</h3><ul>
+<li>初始化指针：在声明一个指针时,立即赋予它一个值。(可以是nullptr)</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">int</span> <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 初始化</span>
+</code></pre>
+<ul>
+<li>使用<strong>智能指针</strong>（unique_ptr和shared_ptr）</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>unique_ptr<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> <span class="token function">ptr</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 id="如何避免悬挂指针"><a href="#如何避免悬挂指针" class="headerlink" title="如何避免悬挂指针?"></a>如何避免悬挂指针?</h3><ul>
+<li>删除对象后，将指针设置为<code>nullptr</code>，确保指针不再指向已经释放的内存。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">delete</span> ptr<span class="token punctuation">;</span>
+ptr <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>同样是使用<strong>智能指针</strong></li>
+</ul>
+<hr>
+<h2 id="内存对齐及其意义？"><a href="#内存对齐及其意义？" class="headerlink" title="内存对齐及其意义？"></a>内存对齐及其意义？</h2><ul>
+<li>概念：内存对齐是变量或结构体成员在内存中的存放地址按照一定的规则排列。</li>
+<li>意义：性能提升，提高可移植性。</li>
+<li>规则：<ul>
+<li>对齐要求：不同数据类型有不同的对齐要求，int一般要求s字节对齐，double一般要求8字节对齐。</li>
+<li>填充字节：</li>
+</ul>
+</li>
+</ul>
 <h2 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h2><ul>
-<li>野指针和悬挂指针的区别？</li>
-<li>内存对齐及其意义？</li>
 <li>四种类型转换及应用场景？</li>
 <li>多态与虚函数原理？</li>
 <li>构造函数和析构函数的虚函数规则？</li>
@@ -1302,7 +1348,7 @@ std<span class="token operator">::</span>thread t2 <span class="token operator">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">7.3k</span>
+                        class="white-color">7.6k</span>
             
             
             
