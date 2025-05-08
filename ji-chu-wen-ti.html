@@ -470,21 +470,21 @@ C++ move 的作用和原理？
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-05-07
+                    2025-05-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.5k
+                    3.5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    10 分
+                    14 分
                 </div>
                 
 
@@ -695,8 +695,19 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
 </code></pre>
 <h2 id="volatile-关键字的作用？"><a href="#volatile-关键字的作用？" class="headerlink" title="volatile 关键字的作用？"></a><code>volatile</code> 关键字的作用？</h2><ul>
-<li>告诉编译器该变量可能被异步修改，禁止对其优化重排读取/写入。</li>
+<li><strong>核心作用</strong>：告诉编译器这个变量随时可能被外部因素修改，不要对它做任何依赖于其值不变的优化。可以理解为禁用编译器的优化（缓存），确保每次读写都是从内存中获取的数据而非寄存器。</li>
 </ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">volatile</span> <span class="token keyword">int</span> flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">irq_handler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>           <span class="token comment" spellcheck="true">// 硬件中断或信号处理程序修改</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span>flag <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 每次都从内存读 flag，不会被优化成 while(true)</span>
+    <span class="token comment" spellcheck="true">/* 等待中断 */</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p> ⚠️：<code>volatile</code>不提供原子性，仍要使用<code>std::atomic</code>或互斥锁来保障多线程安全。</p>
 <h2 id="char-、const-char-、char-const-和-const-char-const-的区别？"><a href="#char-、const-char-、char-const-和-const-char-const-的区别？" class="headerlink" title="char *、const char *、char * const 和 const char * const 的区别？"></a><code>char *</code>、<code>const char *</code>、<code>char * const</code> 和 <code>const char * const</code> 的区别？</h2><ul>
 <li><code>char *</code>：可变指针，可修改指针和指向的数据。</li>
 <li><code>const char *</code>：可变指针，不可修改指向的数据。</li>
@@ -808,13 +819,110 @@ ptr <span class="token operator">=</span> <span class="token keyword">nullptr</s
 <li>概念：内存对齐是变量或结构体成员在内存中的存放地址按照一定的规则排列。</li>
 <li>意义：性能提升，提高可移植性。</li>
 <li>规则：<ul>
-<li>对齐要求：不同数据类型有不同的对齐要求，int一般要求s字节对齐，double一般要求8字节对齐。</li>
-<li>填充字节：</li>
+<li>每个成员的起始地址必须是该成员类型大小的整数倍。</li>
+<li>结构体的大小必须是其最大成员类型大小的整数倍。（不够的话就进行填充）</li>
 </ul>
 </li>
 </ul>
+<hr>
+<h2 id="四种类型转换及应用场景？"><a href="#四种类型转换及应用场景？" class="headerlink" title="四种类型转换及应用场景？"></a>四种类型转换及应用场景？</h2><ol>
+<li>四种常用的<strong>类型转换</strong></li>
+</ol>
+<ul>
+<li><code>static_cast</code>：用于有明确定义的类型之间转换。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">float</span> b <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span><span class="token keyword">float</span><span class="token operator">></span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 将 int 转换为 float</span>
+</code></pre>
+<ul>
+<li><code>dynamic_cast</code>：用于多态类型的指针或引用转换。⚠️只有在类包含虚函数的时候才能使用，而如果转换失败，指针会返回nullptr，引用转换失败则会抛出<code>std::bad_cast</code>异常。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp">Base<span class="token operator">*</span> basePtr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token function">Derived</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+Derived<span class="token operator">*</span> derivedPtr <span class="token operator">=</span> <span class="token keyword">dynamic_cast</span><span class="token operator">&lt;</span>Derived<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>basePtr<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 运行时检查并转换</span>
+</code></pre>
+<ul>
+<li><code>const_cast</code>：用于移除或添加对象的<code>const</code>属性。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">const</span> <span class="token keyword">int</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token operator">*</span> b <span class="token operator">=</span> <span class="token keyword">const_cast</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token operator">&amp;</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 移除 const 属性</span>
+<span class="token operator">*</span>b <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 修改原本为 const 的值</span>
+</code></pre>
+<ul>
+<li><code>reinterpret_cast</code>：底层强制转换。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">long</span> p <span class="token operator">=</span> <span class="token number">0x12345678</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span><span class="token operator">*</span> i <span class="token operator">=</span> <span class="token keyword">reinterpret_cast</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 将 long 转换为 int 指针</span>
+</code></pre>
+<h2 id="什么是多态？"><a href="#什么是多态？" class="headerlink" title="什么是多态？"></a>什么是多态？</h2><p>简单来讲，就是同一个函数或方法调用，可以根据上下文的不同执行执行不同的功能。（同一接口，不同实现，根据传入参数决定调用哪个功能）多态主要通过基类的指针或引用，来调用子类的重写函数实现。C++中的多态主要通过虚函数来实现。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base class show function"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Derived</span> <span class="token operator">:</span> <span class="token keyword">public</span> Base <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived class show function"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    Base<span class="token operator">*</span> basePtr<span class="token punctuation">;</span>
+    Derived derivedObj<span class="token punctuation">;</span>
+    basePtr <span class="token operator">=</span> <span class="token operator">&amp;</span>derivedObj<span class="token punctuation">;</span>
+
+    basePtr<span class="token operator">-</span><span class="token operator">></span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 输出：Derived class show function</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p>上述例子中，通过基类指针<code>basePtr</code>调用派生类<code>Derived</code>的<code>show</code>方法,这就是多态。</p>
+<p>多态还分为<strong>静态多态</strong>和<strong>动态多态</strong>，静态多态通过函数重载和函数模板实现，动态多态通过虚函数实现。</p>
+<ol>
+<li><strong>静态多态</strong><br>函数在编译时就确定了调用哪个函数，效率高但是灵活性差。（静态多态可以理解为一个人有不同的身份，根据传入参数类型的不同，扮演不同的角色）</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Integer: "</span> <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">double</span> f<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Float: "</span> <span class="token operator">&lt;&lt;</span> f <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>T t<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Template: "</span> <span class="token operator">&lt;&lt;</span> t <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li><strong>动态多态</strong><br>本质和静态多态一样，不同的是在运行时才确定调用的函数效率低但是灵活性高。动态多态通过虚函数来实现。<ul>
+<li><strong>虚函数表</strong>：编译器为每个有虚函数的类生成一张虚函数指针表，表中存储该类各虚函数的地址。</li>
+<li><strong>虚指针</strong>：每个对象实例在其内存布局开头，有一个指向所属类虚函数表<code>vtable</code>的指针。</li>
+<li><strong>纯虚函数</strong>和<strong>抽象类</strong>：如果一个类中有纯虚函数，这个类就是抽象类，不能直接实例化。这种类只提供接口，不提供具体实现。</li>
+</ul>
+</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Shape</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 纯虚函数</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Circle</span> <span class="token operator">:</span> <span class="token keyword">public</span> Shape <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Drawing a circle"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<p>通过基类指针或引用调用虚函数时，编译器生成的机器码会先读取对象的虚指针<code>vptr</code>，再在虚函数表<code>vtable</code>上查到正确的函数地址，最后跳转执行。<br>⚠️：使用动态多态的时候基类析构函数要<code>virtual</code>，避免通过基类指针删除子类对象时只调用基类析构。</p>
+<p>有了多态，就可以实现接口分离和常用的设计模式。</p>
+<hr>
 <h2 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h2><ul>
-<li>四种类型转换及应用场景？</li>
 <li>多态与虚函数原理？</li>
 <li>构造函数和析构函数的虚函数规则？</li>
 <li>移动构造函数和移动赋值运算符使用场景？</li>
@@ -854,7 +962,6 @@ ptr <span class="token operator">=</span> <span class="token keyword">nullptr</s
 <li>调用 C 语言库？</li>
 <li>指针与引用区别？</li>
 </ul>
-<p><em>以上为完整的 Markdown 格式笔记，内容保持原样，仅修正了格式。</em></p>
 
                 
             </div>
@@ -1348,7 +1455,7 @@ ptr <span class="token operator">=</span> <span class="token keyword">nullptr</s
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">7.6k</span>
+                        class="white-color">8.6k</span>
             
             
             
