@@ -477,14 +477,14 @@ C++ move 的作用和原理？
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    5k
+                    6.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    20 分
+                    24 分
                 </div>
                 
 
@@ -617,6 +617,8 @@ C++ move 的作用和原理？
 </code></pre>
 </li>
 </ol>
+<hr>
+<h2 id="new和malloc的区别？delete和free的区别？"><a href="#new和malloc的区别？delete和free的区别？" class="headerlink" title="new和malloc的区别？delete和free的区别？"></a>new和malloc的区别？delete和free的区别？</h2><hr>
 <h2 id="define-和-const-的区别？"><a href="#define-和-const-的区别？" class="headerlink" title="#define 和 const 的区别？"></a><code>#define</code> 和 <code>const</code> 的区别？</h2><ul>
 <li><p><strong>作用机制</strong>：</p>
 <ul>
@@ -714,7 +716,29 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
 <li><code>char * const</code>：指针常量，不可修改指针，可修改指向的数据。</li>
 <li><code>const char * const</code>：指针常量且指向常量。</li>
 </ul>
-<h2 id="C-类定义中-delete-关键字和-default-关键字的作用？"><a href="#C-类定义中-delete-关键字和-default-关键字的作用？" class="headerlink" title="C++ 类定义中 delete 关键字和 default 关键字的作用？"></a>C++ 类定义中 <code>delete</code> 关键字和 <code>default</code> 关键字的作用？</h2><h2 id="this-指针的作用？可以使用-delete-this-吗？"><a href="#this-指针的作用？可以使用-delete-this-吗？" class="headerlink" title="this 指针的作用？可以使用 delete this 吗？"></a><code>this</code> 指针的作用？可以使用 <code>delete this</code> 吗？</h2><hr>
+<h2 id="C-类定义中-delete-关键字和-default-关键字的作用？"><a href="#C-类定义中-delete-关键字和-default-关键字的作用？" class="headerlink" title="C++ 类定义中 delete 关键字和 default 关键字的作用？"></a>C++ 类定义中 <code>delete</code> 关键字和 <code>default</code> 关键字的作用？</h2><ul>
+<li><code>delete</code>用于禁用某些默认的成员函数。主要的作用就是禁用拷贝构造函数和拷贝移动赋值运算符。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>                <span class="token comment" spellcheck="true">// 使用默认构造函数</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">// 禁用拷贝构造函数</span>
+    MyClass<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 禁用拷贝赋值运算符</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li><code>default</code>关键字用于显示地指示编译器为某个成员函数生成默认的实现。经常用在构造函数、析构函数，以及拷贝构造函数上。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>                <span class="token comment" spellcheck="true">// 使用默认构造函数</span>
+    <span class="token operator">~</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>               <span class="token comment" spellcheck="true">// 使用默认析构函数</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 使用默认拷贝构造函数</span>
+    MyClass<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 使用默认拷贝赋值运算符</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="this-指针的作用？可以使用-delete-this-吗？"><a href="#this-指针的作用？可以使用-delete-this-吗？" class="headerlink" title="this 指针的作用？可以使用 delete this 吗？"></a><code>this</code> 指针的作用？可以使用 <code>delete this</code> 吗？</h2><hr>
 <h2 id="什么是深拷贝和浅拷贝？"><a href="#什么是深拷贝和浅拷贝？" class="headerlink" title="什么是深拷贝和浅拷贝？"></a>什么是深拷贝和浅拷贝？</h2><ul>
 <li><strong>深拷贝</strong>（copy）：复制内容，资源独立。</li>
 <li><strong>浅拷贝</strong>（move）：转移资源所有权，源对象不再使用，但必须保持有效状态。</li>
@@ -1059,13 +1083,124 @@ std<span class="token operator">::</span>string b <span class="token operator">=
 <hr>
 <h2 id="map-vs-unordered-map？"><a href="#map-vs-unordered-map？" class="headerlink" title="map vs unordered_map？"></a><code>map</code> vs <code>unordered_map</code>？</h2><p>map基于有序的红黑树<br>unordered_map基于哈希表</p>
 <hr>
+<h2 id="struct-class-union-区别与优化？"><a href="#struct-class-union-区别与优化？" class="headerlink" title="struct/class/union 区别与优化？"></a><code>struct</code>/<code>class</code>/<code>union</code> 区别与优化？</h2><ol>
+<li>三种类型</li>
+</ol>
+<ul>
+<li><code>struct</code>默认成员为<code>public</code>：用于数据结构封装。</li>
+<li><code>class</code>默认成员为<code>private</code>：用于面向对象编程，支持封装、继承和多态。</li>
+<li><code>union</code>默认成员为<code>public</code>：所有成员共用一块内存，节省空间但是只保存一个成员变量。</li>
+</ul>
+<ol start="2">
+<li>区别</li>
+</ol>
+<ul>
+<li><code>struct</code>和<code>class</code>的区别<br><code>struct</code>在C++中除了默认成员访问级别为<code>public</code>外，其他与<code>class</code>基本一致。</li>
+<li><code>srtuct</code>和<code>union</code>的区别<ul>
+<li>存储方式：<code>struct</code>中所有成员变量格局占有独立的内存空间，union共用一块内存空间，且大小是最大成员的大小</li>
+<li>访问方式：前者都可访问，后者每次只能有一个成员变量有效，如果在一个成员值改变后访问另一个成员，结果不可预知。</li>
+<li>用途：<code>struct</code>用于存储逻辑上关联的不同数据，而<code>union</code>通常用于节省内存空间，作为一个优化项使用。例如在嵌入式系统或者资源有限的场景中，让变量共享内存，可以减少内存消耗。很多底层库为了性能极致，也会使用<code>union</code>，业务层一般不用。</li>
+</ul>
+</li>
+</ul>
+<p>举个例子：</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//struct</span>
+<span class="token keyword">struct</span> MyStruct <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> intVal<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> floatVal<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> charVal<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+MyStruct s<span class="token punctuation">;</span>
+s<span class="token punctuation">.</span>intVal <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span>floatVal <span class="token operator">=</span> <span class="token number">3.14f</span><span class="token punctuation">;</span>
+s<span class="token punctuation">.</span>charVal <span class="token operator">=</span> <span class="token string">'A'</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//union</span>
+<span class="token keyword">union</span> MyUnion <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> intVal<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> floatVal<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> charVal<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+MyUnion u<span class="token punctuation">;</span>
+u<span class="token punctuation">.</span>intVal <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"intVal: "</span> <span class="token operator">&lt;&lt;</span> u<span class="token punctuation">.</span>intVal <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+
+u<span class="token punctuation">.</span>floatVal <span class="token operator">=</span> <span class="token number">3.14f</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"floatVal: "</span> <span class="token operator">&lt;&lt;</span> u<span class="token punctuation">.</span>floatVal <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+
+u<span class="token punctuation">.</span>charVal <span class="token operator">=</span> <span class="token string">'A'</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"charVal: "</span> <span class="token operator">&lt;&lt;</span> u<span class="token punctuation">.</span>charVal <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//每次只能一个变量有效，其他成员的值会被覆盖</span>
+</code></pre>
+<ol start="3">
+<li>使用<code>union</code>进行优化<br>利用<code>union</code>来节省空间（如解析网络数据包或者内存有限的嵌入式场景），例子如下：</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> DataPacket <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> type<span class="token punctuation">;</span>
+    <span class="token keyword">union</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> intData<span class="token punctuation">;</span>
+        <span class="token keyword">float</span> floatData<span class="token punctuation">;</span>
+        <span class="token keyword">char</span> charData<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> data<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+DataPacket packet<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 用于指示数据类型</span>
+packet<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 0 表示整数，1 表示浮点数，2表示字符数组</span>
+packet<span class="token punctuation">.</span>data<span class="token punctuation">.</span>intData <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"intData: "</span> <span class="token operator">&lt;&lt;</span> packet<span class="token punctuation">.</span>data<span class="token punctuation">.</span>intData <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// 再更改为浮点数数据</span>
+packet<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>  
+packet<span class="token punctuation">.</span>data<span class="token punctuation">.</span>floatData <span class="token operator">=</span> <span class="token number">5.5</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"floatData: "</span> <span class="token operator">&lt;&lt;</span> packet<span class="token punctuation">.</span>data<span class="token punctuation">.</span>floatData <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+</code></pre>
+<p>上述例子中通过使用结构体中的<code>union</code>来表示多种类型的数据，可以动态的切换数据类型，同时节省开销。<br>⚠️在真实的项目中最好用<code>enum</code>（枚举类型）来标记当前有效的类型避免错误。</p>
+<hr>
+<h2 id="using-和-typedef-区别？"><a href="#using-和-typedef-区别？" class="headerlink" title="using 和 typedef 区别？"></a><code>using</code> 和 <code>typedef</code> 区别？</h2><p>建议用<code>using</code>，因为两个都可以用来为已有的类型定义一个新的名称，但是<code>using</code>可以用来定义模板别名，<code>typedef</code>不能。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">using</span> ulong <span class="token operator">=</span> <span class="token keyword">unsigned</span> <span class="token keyword">long</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> FuncPtr <span class="token operator">=</span> <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>using定义模板别名<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">template</span><span class="token operator">&lt;</span><span class="token keyword">typename</span> T<span class="token operator">></span>
+<span class="token keyword">using</span> Vec <span class="token operator">=</span> std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">;</span>
+Vec<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span> vecInt<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 相当于 std::vector&lt;int> vecInt;</span>
+</code></pre>
+</li>
+<li>using还可以定义命名空间</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">namespace</span> LongNamespaceName <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> value<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+<span class="token keyword">using</span> LNN <span class="token operator">=</span> LongNamespaceName<span class="token punctuation">;</span>
+LNN<span class="token operator">::</span>value <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 相当于 LongNamespaceName::value</span>
+</code></pre>
+<hr>
+<h2 id="enum-vs-enum-class？"><a href="#enum-vs-enum-class？" class="headerlink" title="enum vs enum class？"></a><code>enum</code> vs <code>enum class</code>？</h2><p>表示一组相关的、有限的常量值，使代码更具可读性、可维护性。</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">enum</span> Color <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> Red<span class="token punctuation">,</span> Green<span class="token punctuation">,</span> Blue <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+Color c <span class="token operator">=</span> Red<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 比直接用 0、1、2 更直观</span>
+</code></pre>
+<p>而<code>enum</code>是传统枚举类型，<code>enum class</code>是强类型枚举（C++11后引进的新特性）推荐使用<code>enum class</code>（用<code>enum class</code>可获得更好的类型安全和命名隔离）</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//示例</span>
+<span class="token comment" spellcheck="true">//enum</span>
+<span class="token keyword">enum</span> Color <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> Red<span class="token punctuation">,</span> Green <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> x <span class="token operator">=</span> Red<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//enum class</span>
+<span class="token keyword">enum</span> <span class="token keyword">class</span> <span class="token class-name">Color</span> <span class="token operator">:</span> <span class="token keyword">unsigned</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> Red<span class="token punctuation">,</span> Green <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+Color c <span class="token operator">=</span> Color<span class="token operator">::</span>Red<span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="list-的底层原理和使用场景？"><a href="#list-的底层原理和使用场景？" class="headerlink" title="list 的底层原理和使用场景？"></a><code>list</code> 的底层原理和使用场景？</h2><hr>
+<hr>
+<hr>
 <h2 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h2><ul>
 <li>运算符重载？</li>
-<li><code>struct</code>/<code>class</code>/<code>union</code> 区别与优化？</li>
-<li><code>using</code> 和 <code>typedef</code> 区别？</li>
-<li><code>enum</code> vs <code>enum class</code>？</li>
-<li><code>new</code>/<code>malloc</code> 与 <code>delete</code>/<code>free</code> 区别？</li>
-<li><code>list</code> 使用场景？</li>
+<li>拷贝构造函数和移动复制运算符？</li>
 <li>RAII 概念及场景？</li>
 <li><code>lock_guard</code> vs <code>unique_lock</code>？</li>
 <li><code>thread</code> join vs detach？</li>
@@ -1584,7 +1719,7 @@ std<span class="token operator">::</span>string b <span class="token operator">=
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">10.2k</span>
+                        class="white-color">11.2k</span>
             
             
             
