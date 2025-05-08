@@ -477,14 +477,14 @@ C++ move 的作用和原理？
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    3.5k
+                    4.8k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    14 分
+                    19 分
                 </div>
                 
 
@@ -853,7 +853,7 @@ Derived<span class="token operator">*</span> derivedPtr <span class="token opera
 <pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">long</span> p <span class="token operator">=</span> <span class="token number">0x12345678</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span><span class="token operator">*</span> i <span class="token operator">=</span> <span class="token keyword">reinterpret_cast</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 将 long 转换为 int 指针</span>
 </code></pre>
-<h2 id="什么是多态？"><a href="#什么是多态？" class="headerlink" title="什么是多态？"></a>什么是多态？</h2><p>简单来讲，就是同一个函数或方法调用，可以根据上下文的不同执行执行不同的功能。（同一接口，不同实现，根据传入参数决定调用哪个功能）多态主要通过基类的指针或引用，来调用子类的重写函数实现。C++中的多态主要通过虚函数来实现。</p>
+<h2 id="多态和虚函数？"><a href="#多态和虚函数？" class="headerlink" title="多态和虚函数？"></a>多态和虚函数？</h2><p>简单来讲，就是同一个函数或方法调用，可以根据上下文的不同执行执行不同的功能。（同一接口，不同实现，根据传入参数决定调用哪个功能）多态主要通过基类的指针或引用，来调用子类的重写函数实现。C++中的多态主要通过虚函数来实现。</p>
 <pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
 
@@ -900,13 +900,15 @@ Derived<span class="token operator">*</span> derivedPtr <span class="token opera
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
 </code></pre>
 <ol start="2">
-<li><strong>动态多态</strong><br>本质和静态多态一样，不同的是在运行时才确定调用的函数效率低但是灵活性高。动态多态通过虚函数来实现。<ul>
+<li><strong>动态多态</strong><br>本质和静态多态一样，不同的是在运行时才确定调用的函数效率低但是灵活性高。动态多态通过虚函数来实现。</li>
+<li><strong>虚函数</strong>：虚函数允许在基类中用virtual声明一个函数，然后在派生类中对其进行重新定义。每个含有虚函数的类都有一张虚函数表，表中存放该类的虚函数的地址。每个该类的对象都有一个虚指针指向这张虚函数表。<ul>
 <li><strong>虚函数表</strong>：编译器为每个有虚函数的类生成一张虚函数指针表，表中存储该类各虚函数的地址。</li>
-<li><strong>虚指针</strong>：每个对象实例在其内存布局开头，有一个指向所属类虚函数表<code>vtable</code>的指针。</li>
+<li><strong>虚指针</strong>：每个对象实例在其内存布局开头，有一个指向所属类的虚函数表<code>vtable</code>的指针。</li>
 <li><strong>纯虚函数</strong>和<strong>抽象类</strong>：如果一个类中有纯虚函数，这个类就是抽象类，不能直接实例化。这种类只提供接口，不提供具体实现。</li>
 </ul>
 </li>
 </ol>
+<p>⚠️静态绑定的成员变量不能是虚函数（因为静态函数既没有 <code>vptr</code>，也不在 <code>vtable</code> 中）；虚函数调用比普通函数调用多了一个<code>vtable</code>查找的过程，增加一定开销</p>
 <pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Shape</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
     <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 纯虚函数</span>
@@ -922,12 +924,130 @@ Derived<span class="token operator">*</span> derivedPtr <span class="token opera
 <p>通过基类指针或引用调用虚函数时，编译器生成的机器码会先读取对象的虚指针<code>vptr</code>，再在虚函数表<code>vtable</code>上查到正确的函数地址，最后跳转执行。<br>⚠️：使用动态多态的时候基类析构函数要<code>virtual</code>，避免通过基类指针删除子类对象时只调用基类析构。</p>
 <p>有了多态，就可以实现接口分离和常用的设计模式。</p>
 <hr>
+<h2 id="构造函数和析构函数的虚函数规则？"><a href="#构造函数和析构函数的虚函数规则？" class="headerlink" title="构造函数和析构函数的虚函数规则？"></a>构造函数和析构函数的虚函数规则？</h2><h3 id="构造函数可以是虚函数"><a href="#构造函数可以是虚函数" class="headerlink" title="构造函数可以是虚函数"></a>构造函数可以是虚函数</h3><p>构造函数不可以是虚函数，因为构造函数是用来初始化资源的，而虚函数机制依赖虚函数表，虚函数表的建立是在调用构造函数之后才能完成的。（只有调用了构造函数，才会生成虚函数表）</p>
+<h3 id="析构函数应该是虚函数"><a href="#析构函数应该是虚函数" class="headerlink" title="析构函数应该是虚函数"></a>析构函数应该是虚函数</h3><p>确保在删除一个调用派生类对象的基类指针时，能正确调用派生类的析构函数。如果析构函数不是虚函数，那么通过基类指针删除子类对象时，只会调用基类的析构函数，不会调用子类的析构函数，会造成内存泄漏。</p>
+<h3 id="静态成员函数和友元函数不能是虚函数"><a href="#静态成员函数和友元函数不能是虚函数" class="headerlink" title="静态成员函数和友元函数不能是虚函数"></a>静态成员函数和友元函数不能是虚函数</h3><ul>
+<li>静态成员函数与类关联，不与某个对象关联。</li>
+<li>友元函数不属于类的成员函数。</li>
+</ul>
+<hr>
+<h2 id="移动构造函数和移动赋值运算符使用场景？"><a href="#移动构造函数和移动赋值运算符使用场景？" class="headerlink" title="移动构造函数和移动赋值运算符使用场景？"></a>移动构造函数和移动赋值运算符使用场景？</h2><ol>
+<li>使用场景</li>
+</ol>
+<ul>
+<li>当函数返回一个对象时，用移动构造函数可以避免返回值拷贝。</li>
+<li>当函数传递参数时，使用右值+移动构造函数可以避免参数拷贝。</li>
+<li>当需要将一个大对象从一个容器（如<code>vector</code>）移动到另外一个容器中，用移动赋值运算可以避免重复的资源分配。</li>
+</ul>
+<ol start="2">
+<li>核心原理</li>
+</ol>
+<ul>
+<li>移动构造函数：接收同类型的右值引用，<code>T(T&amp;&amp; other) noexcept</code>，用于初始化新对象并“窃取”旧对象的资源。</li>
+<li>移动赋值运算：接收右值引用，<code>T&amp; operator=(T&amp;&amp; other) noexcept</code>，用于将右值对象的资源转移到已存在对象，并清理旧资源。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Buffer</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span><span class="token operator">*</span> data_<span class="token punctuation">;</span>
+    size_t size_<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token comment" spellcheck="true">// 移动构造</span>
+    <span class="token function">Buffer</span><span class="token punctuation">(</span>Buffer<span class="token operator">&amp;&amp;</span> other<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+      <span class="token operator">:</span> <span class="token function">data_</span><span class="token punctuation">(</span>other<span class="token punctuation">.</span>data_<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">size_</span><span class="token punctuation">(</span>other<span class="token punctuation">.</span>size_<span class="token punctuation">)</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        other<span class="token punctuation">.</span>data_ <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+        other<span class="token punctuation">.</span>size_ <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 移动赋值</span>
+    Buffer<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span>Buffer<span class="token operator">&amp;&amp;</span> other<span class="token punctuation">)</span> <span class="token keyword">noexcept</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token operator">!=</span> <span class="token operator">&amp;</span>other<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+            <span class="token keyword">delete</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data_<span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// 1. 释放旧资源</span>
+            data_ <span class="token operator">=</span> other<span class="token punctuation">.</span>data_<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">// 2. 窃取资源</span>
+            size_ <span class="token operator">=</span> other<span class="token punctuation">.</span>size_<span class="token punctuation">;</span>
+            other<span class="token punctuation">.</span>data_ <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 3. 重置源</span>
+            other<span class="token punctuation">.</span>size_ <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>                <span class="token comment" spellcheck="true">// 4. 返回自身</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token operator">~</span><span class="token function">Buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token keyword">delete</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data_<span class="token punctuation">;</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="3">
+<li>扩展知识</li>
+</ol>
+<ul>
+<li>右值引用：右值引用使用两个连续的&amp;&amp;表示。在函数声明中，如果参数是右值引用，它只接受可被销毁的对象。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>string <span class="token function">makeStr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token keyword">return</span> <span class="token string">"hello"</span><span class="token punctuation">;</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>string s <span class="token operator">=</span> <span class="token function">makeStr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">// 直接调用移动构造（若有）</span>
+std<span class="token operator">::</span>string<span class="token operator">&amp;&amp;</span> tmp <span class="token operator">=</span> <span class="token function">makeStr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">// tmp 绑定到临时字符串</span>
+</code></pre>
+<ul>
+<li><code>std::move</code>：本质是一个强制转换，将任何左值<code>x</code>转换成对应类型的右值引用<code>T&amp;&amp;</code>。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>string a <span class="token operator">=</span> <span class="token string">"data"</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>string b <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// a 的内部缓冲区“窃取”到 b，a 变为空</span>
+</code></pre>
+<hr>
+<h2 id="什么是虚继承？"><a href="#什么是虚继承？" class="headerlink" title="什么是虚继承？"></a>什么是虚继承？</h2><p>当一个类通过多个派生类继承同一个基类时，虚继承确保基类的成员只有一个实例，而不是生成多余冗余实例。用于解决<strong>菱形继承</strong>问题。</p>
+<ol>
+<li>语法<br>在派生类声明的时候，使用<code>virtual</code>表示虚继承。</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 基类 */</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">B</span> <span class="token operator">:</span> <span class="token keyword">virtual</span> <span class="token keyword">public</span> A <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 派生自A */</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token operator">:</span> <span class="token keyword">virtual</span> <span class="token keyword">public</span> A <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 派生自A */</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">D</span> <span class="token operator">:</span> <span class="token keyword">public</span> B<span class="token punctuation">,</span> <span class="token keyword">public</span> C <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">/* 派生自B和C */</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li>原理<br>编译器在派生类对象中不直接嵌入<code>A</code>的成员，而是存放一个指向唯一 <code>A</code>子对象的指针（虚基指针，<code>vptr</code>）。在构造时，保证虚基指针只初始化一次，共享同一份基类实例。</li>
+</ol>
+<hr>
+<h2 id="函数重载和重写的区别？"><a href="#函数重载和重写的区别？" class="headerlink" title="函数重载和重写的区别？"></a>函数重载和重写的区别？</h2><ul>
+<li><strong>重载</strong>：同一个作用域内允许多个同名函数，他们的参数类型或者个数不同。注意返回值类型不同不能算是重载。</li>
+<li><strong>重写</strong>：继承时，子类重写父类的成员函数，参数列表必须与父类一致。</li>
+<li><strong>区别</strong>：<ul>
+<li>重载在编译时就决定调用哪个函数（静态绑定），重写在运行时才决定。（动态绑定）</li>
+<li>重载可以发生在同一个类中，重写发生在继承关系的子类中。</li>
+<li>重载要求参数列表必须不同，重写要求参数列表和返回类型必须一致。</li>
+</ul>
+</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span>  </span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;string></span>  </span>
+  
+<span class="token comment" spellcheck="true">// 重载print函数以打印整数  </span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Printing int: "</span> <span class="token operator">&lt;&lt;</span> i <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  
+  
+<span class="token comment" spellcheck="true">// 重载print函数以打印浮点数  </span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">double</span> f<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Printing float: "</span> <span class="token operator">&lt;&lt;</span> f <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  
+  
+<span class="token comment" spellcheck="true">// 重载print函数以打印字符串  </span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string<span class="token operator">&amp;</span> s<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Printing string: "</span> <span class="token operator">&lt;&lt;</span> s <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  
+  
+<span class="token comment" spellcheck="true">// 重载print函数以打印字符  </span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Printing char: "</span> <span class="token operator">&lt;&lt;</span> c <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>  
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  
+  
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>  
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// 调用打印整数的print  </span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token number">500.263</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 调用打印浮点数的print  </span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">// 调用打印字符串的print  </span>
+    <span class="token function">print</span><span class="token punctuation">(</span><span class="token string">'A'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">// 调用打印字符的print  </span>
+  
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<hr>
+<h2 id="运算符重载？"><a href="#运算符重载？" class="headerlink" title="运算符重载？"></a>运算符重载？</h2><hr>
 <h2 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h2><ul>
-<li>多态与虚函数原理？</li>
-<li>构造函数和析构函数的虚函数规则？</li>
-<li>移动构造函数和移动赋值运算符使用场景？</li>
-<li>虚继承？</li>
-<li>函数重载与重写区别？</li>
 <li>运算符重载？</li>
 <li><code>struct</code>/<code>class</code>/<code>union</code> 区别与优化？</li>
 <li><code>using</code> 和 <code>typedef</code> 区别？</li>
@@ -1455,7 +1575,7 @@ Derived<span class="token operator">*</span> derivedPtr <span class="token opera
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">8.6k</span>
+                        class="white-color">10k</span>
             
             
             
