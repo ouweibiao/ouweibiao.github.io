@@ -477,14 +477,14 @@ C++ move 的作用和原理？
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    4.8k
+                    5k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    19 分
+                    20 分
                 </div>
                 
 
@@ -1047,15 +1047,24 @@ std<span class="token operator">::</span>string b <span class="token operator">=
 </code></pre>
 <hr>
 <h2 id="运算符重载？"><a href="#运算符重载？" class="headerlink" title="运算符重载？"></a>运算符重载？</h2><hr>
+<h2 id="vector-原理，resize-vs-reserve？sizeVScapacity？"><a href="#vector-原理，resize-vs-reserve？sizeVScapacity？" class="headerlink" title="vector 原理，resize vs reserve？sizeVScapacity？"></a><code>vector</code> 原理，<code>resize</code> vs <code>reserve</code>？<code>size</code>VS<code>capacity</code>？</h2><hr>
+<h2 id="deque-原理？"><a href="#deque-原理？" class="headerlink" title="deque 原理？"></a><code>deque</code> 原理？</h2><p>双端队列，</p>
+<ul>
+<li>分段式存储结构：分配若干个小块的连续内存，并用一个映射表（类似指针数组）来管理这些小内存。</li>
+<li>中央控制块：<code>map</code>（或者指针数组），这个数组的每个元素都是指针，分别指向一块子内存，这些内存块成为缓冲区。</li>
+<li>双端操作：插入和删除仅在小块内存上进行操作，不需要想<code>vector</code>一样在整个数组上进行。</li>
+<li>内存增长机制：需要增多内存时，分配新的缓冲区并更新<code>map</code>，不需要移动现有的元素。</li>
+<li>缓存局限性：频繁访问大量元素的时候，性能比较差，但在插入和删除方面会更加灵活。</li>
+</ul>
+<hr>
+<h2 id="map-vs-unordered-map？"><a href="#map-vs-unordered-map？" class="headerlink" title="map vs unordered_map？"></a><code>map</code> vs <code>unordered_map</code>？</h2><p>map基于有序的红黑树<br>unordered_map基于哈希表</p>
+<hr>
 <h2 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h2><ul>
 <li>运算符重载？</li>
 <li><code>struct</code>/<code>class</code>/<code>union</code> 区别与优化？</li>
 <li><code>using</code> 和 <code>typedef</code> 区别？</li>
 <li><code>enum</code> vs <code>enum class</code>？</li>
 <li><code>new</code>/<code>malloc</code> 与 <code>delete</code>/<code>free</code> 区别？</li>
-<li><code>vector</code> 原理，<code>resize</code> vs <code>reserve</code>？</li>
-<li><code>deque</code> 原理？</li>
-<li><code>map</code> vs <code>unordered_map</code>？</li>
 <li><code>list</code> 使用场景？</li>
 <li>RAII 概念及场景？</li>
 <li><code>lock_guard</code> vs <code>unique_lock</code>？</li>
@@ -1575,7 +1584,7 @@ std<span class="token operator">::</span>string b <span class="token operator">=
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">10k</span>
+                        class="white-color">10.2k</span>
             
             
             
