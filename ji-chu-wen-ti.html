@@ -470,21 +470,21 @@ C++ move 的作用和原理？
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-05-08
+                    2025-05-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    6.1k
+                    8.1k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    24 分
+                    33 分
                 </div>
                 
 
@@ -716,8 +716,11 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
 <li><code>char * const</code>：指针常量，不可修改指针，可修改指向的数据。</li>
 <li><code>const char * const</code>：指针常量且指向常量。</li>
 </ul>
-<h2 id="C-类定义中-delete-关键字和-default-关键字的作用？"><a href="#C-类定义中-delete-关键字和-default-关键字的作用？" class="headerlink" title="C++ 类定义中 delete 关键字和 default 关键字的作用？"></a>C++ 类定义中 <code>delete</code> 关键字和 <code>default</code> 关键字的作用？</h2><ul>
-<li><code>delete</code>用于禁用某些默认的成员函数。主要的作用就是禁用拷贝构造函数和拷贝移动赋值运算符。</li>
+<h2 id="delete-关键字和-default-关键字的作用？"><a href="#delete-关键字和-default-关键字的作用？" class="headerlink" title="delete 关键字和 default 关键字的作用？"></a><code>delete</code> 关键字和 <code>default</code> 关键字的作用？</h2><ol>
+<li>作用</li>
+</ol>
+<ul>
+<li><code>delete</code>用于<strong>禁用</strong>某些默认的成员函数。主要的作用就是禁用拷贝构造函数和拷贝移动赋值运算符。</li>
 </ul>
 <pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -727,7 +730,7 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
 </code></pre>
 <ul>
-<li><code>default</code>关键字用于显示地指示编译器为某个成员函数生成默认的实现。经常用在构造函数、析构函数，以及拷贝构造函数上。</li>
+<li><code>default</code>关键字用于显示地指示编译器为某个成员函数生成<strong>默认</strong>的实现。经常用在构造函数、析构函数，以及拷贝构造函数上。</li>
 </ul>
 <pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
@@ -737,12 +740,155 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
     MyClass<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 使用默认拷贝赋值运算符</span>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
 </code></pre>
-<hr>
-<h2 id="this-指针的作用？可以使用-delete-this-吗？"><a href="#this-指针的作用？可以使用-delete-this-吗？" class="headerlink" title="this 指针的作用？可以使用 delete this 吗？"></a><code>this</code> 指针的作用？可以使用 <code>delete this</code> 吗？</h2><hr>
-<h2 id="什么是深拷贝和浅拷贝？"><a href="#什么是深拷贝和浅拷贝？" class="headerlink" title="什么是深拷贝和浅拷贝？"></a>什么是深拷贝和浅拷贝？</h2><ul>
-<li><strong>深拷贝</strong>（copy）：复制内容，资源独立。</li>
-<li><strong>浅拷贝</strong>（move）：转移资源所有权，源对象不再使用，但必须保持有效状态。</li>
+<ol start="2">
+<li>扩展知识</li>
+</ol>
+<ul>
+<li><code>delete</code>还可以用来禁用某些传统的函数重载。</li>
 </ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">// 禁用带一个整数参数的构造函数</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>可以结合<code>delete</code>和<code>defalut</code>构造更加安全的类，更好的控制类的行为和接口。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">NonCopyable</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">NonCopyable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 默认构造函数</span>
+    <span class="token function">NonCopyable</span><span class="token punctuation">(</span><span class="token keyword">const</span> NonCopyable<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 禁用拷贝构造函数</span>
+    NonCopyable<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">const</span> NonCopyable<span class="token operator">&amp;</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">delete</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 禁用拷贝赋值运算符</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<p>💡智能指针中的<code>unique_ptr</code>的原理就是使用<code>delete</code>进行了拷贝构造函数和拷贝赋值运算符。</p>
+<hr>
+<h2 id="this-指针的作用？可以使用-delete-this-吗？"><a href="#this-指针的作用？可以使用-delete-this-吗？" class="headerlink" title="this 指针的作用？可以使用 delete this 吗？"></a><code>this</code> 指针的作用？可以使用 <code>delete this</code> 吗？</h2><ol>
+<li>作用<br>this指针是隐含在每个非静态成员函数中的指针。他指向的是调用成员函数的那个对象的地址，主要作用包括：</li>
+</ol>
+<ul>
+<li>访问类成员变量和成员函数，可用this指针区分当局变量与成员变量。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Box</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">double</span> length<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">Box</span><span class="token punctuation">(</span><span class="token keyword">double</span> length<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 用this指针区分成员变量和构造函数参数</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">setLength</span><span class="token punctuation">(</span><span class="token keyword">double</span> length<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 同样在成员函数中区分成员变量和参数</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">double</span> <span class="token function">getLength</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>length<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 使用this指针访问成员变量</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>链式调用，通过*this可以实现链式调用。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Box</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">double</span> length<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+    Box<span class="token operator">&amp;</span> <span class="token function">setLength</span><span class="token punctuation">(</span><span class="token keyword">double</span> length<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">*</span><span class="token keyword">this</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 返回对象本身的引用</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Length: "</span> <span class="token operator">&lt;&lt;</span> length <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    Box box<span class="token punctuation">;</span>
+    box<span class="token punctuation">.</span><span class="token function">setLength</span><span class="token punctuation">(</span><span class="token number">5.0</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 链式调用</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>动态绑定，可以在基类函数中使用this指针调用派生类对象。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Base</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Base show"</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">void</span> <span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 调用的是实际对象的show()方法</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Derived</span> <span class="token operator">:</span> <span class="token keyword">public</span> Base <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Derived show"</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    Derived d<span class="token punctuation">;</span>
+    Base <span class="token operator">*</span>b <span class="token operator">=</span> <span class="token operator">&amp;</span>d<span class="token punctuation">;</span>
+    b<span class="token operator">-</span><span class="token operator">></span><span class="token function">display</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 尽管指针是Base类的，但调用的是Derived的show()方法</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<ol start="2">
+<li>可以delete this指针，但是必须非常谨慎，否则会出现未定义行为。delete this的主要作用是允许对象在其成员函数中自行销毁。（普通程序员不建议使用）</li>
+</ol>
+<ul>
+<li>使用场景：使用new申请的空间+需要成员函数销毁内存+后续不会访问这个类的实例的成员函数和变量。</li>
+</ul>
+<hr>
+<h2 id="什么是深拷贝和浅拷贝？写一个标准的拷贝构造函数？"><a href="#什么是深拷贝和浅拷贝？写一个标准的拷贝构造函数？" class="headerlink" title="什么是深拷贝和浅拷贝？写一个标准的拷贝构造函数？"></a>什么是深拷贝和浅拷贝？写一个标准的拷贝构造函数？</h2><ul>
+<li><strong>深拷贝</strong>（copy）：复制内容，资源独立。</li>
+<li><strong>浅拷贝</strong>（move）：源所有权，源对象不再使用，但必须保持有效状态。</li>
+<li><strong>拷贝构造函数</strong>：</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span> </span><span class="token comment" spellcheck="true">// for std::strlen and std::strcpy</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyClass</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> inputData<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        data <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span>std<span class="token operator">::</span><span class="token function">strlen</span><span class="token punctuation">(</span>inputData<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span><span class="token function">strcpy</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> inputData<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 深拷贝构造函数</span>
+    <span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyClass<span class="token operator">&amp;</span> other<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        data <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">char</span><span class="token punctuation">[</span>std<span class="token operator">::</span><span class="token function">strlen</span><span class="token punctuation">(</span>other<span class="token punctuation">.</span>data<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span><span class="token function">strcpy</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> other<span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// Destructor</span>
+    <span class="token operator">~</span><span class="token function">MyClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        <span class="token keyword">delete</span><span class="token punctuation">[</span><span class="token punctuation">]</span> data<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 打印数据</span>
+    <span class="token keyword">void</span> <span class="token function">printData</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> data <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    MyClass <span class="token class-name">obj1</span><span class="token punctuation">(</span><span class="token string">"Hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    MyClass <span class="token class-name">obj2</span> <span class="token operator">=</span> obj1<span class="token punctuation">;</span>
+    obj1<span class="token punctuation">.</span><span class="token function">printData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Output: Hello</span>
+    obj2<span class="token punctuation">.</span><span class="token function">printData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Output: Hello</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>MyClass</code>类有一个指向字符数组的指针<code>data</code>，拷贝构造函数对另一个对象进行深拷贝，即为<code>data</code>分配新的内存并复制字符串，两个对象都有自己独立的空间和资源。</p>
 <h2 id="C-中什么是移动语义和完美转发？"><a href="#C-中什么是移动语义和完美转发？" class="headerlink" title="C++ 中什么是移动语义和完美转发？"></a>C++ 中什么是移动语义和完美转发？</h2><h2 id="三种智能指针的使用场景"><a href="#三种智能指针的使用场景" class="headerlink" title="三种智能指针的使用场景"></a>三种智能指针的使用场景</h2><h3 id="std-unique-ptr"><a href="#std-unique-ptr" class="headerlink" title="std::unique_ptr"></a><code>std::unique_ptr</code></h3><ul>
 <li>独占所有权，同一时间只有一个所有者，销毁时释放资源。</li>
 <li>场景：单一所有者的资源管理，如文件句柄、互斥锁等。</li>
@@ -755,6 +901,7 @@ Foo f2 <span class="token operator">=</span> <span class="token function">Foo</s
 <li>不增引用计数，观察 <code>shared_ptr</code> 管理的对象，解决循环引用。</li>
 <li>场景：缓存、观察者模式中需要弱引用。</li>
 </ul>
+<hr>
 <h2 id="C-11-中的新特性"><a href="#C-11-中的新特性" class="headerlink" title="C++11 中的新特性"></a>C++11 中的新特性</h2><h3 id="auto-类型推导"><a href="#auto-类型推导" class="headerlink" title="auto 类型推导"></a><code>auto</code> 类型推导</h3><pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">auto</span> a <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>              <span class="token comment" spellcheck="true">// 推导为 int</span>
 <span class="token keyword">auto</span> b <span class="token operator">=</span> vec<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">// 推导为迭代器类型</span>
 </code></pre>
@@ -877,6 +1024,7 @@ Derived<span class="token operator">*</span> derivedPtr <span class="token opera
 <pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">long</span> p <span class="token operator">=</span> <span class="token number">0x12345678</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span><span class="token operator">*</span> i <span class="token operator">=</span> <span class="token keyword">reinterpret_cast</span><span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 将 long 转换为 int 指针</span>
 </code></pre>
+<hr>
 <h2 id="多态和虚函数？"><a href="#多态和虚函数？" class="headerlink" title="多态和虚函数？"></a>多态和虚函数？</h2><p>简单来讲，就是同一个函数或方法调用，可以根据上下文的不同执行执行不同的功能。（同一接口，不同实现，根据传入参数决定调用哪个功能）多态主要通过基类的指针或引用，来调用子类的重写函数实现。C++中的多态主要通过虚函数来实现。</p>
 <pre class=" language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
 <span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
@@ -1081,7 +1229,69 @@ std<span class="token operator">::</span>string b <span class="token operator">=
 <li>缓存局限性：频繁访问大量元素的时候，性能比较差，但在插入和删除方面会更加灵活。</li>
 </ul>
 <hr>
-<h2 id="map-vs-unordered-map？"><a href="#map-vs-unordered-map？" class="headerlink" title="map vs unordered_map？"></a><code>map</code> vs <code>unordered_map</code>？</h2><p>map基于有序的红黑树<br>unordered_map基于哈希表</p>
+<h2 id="map-vs-unordered-map？"><a href="#map-vs-unordered-map？" class="headerlink" title="map vs unordered_map？"></a><code>map</code> vs <code>unordered_map</code>？</h2><p>两者都是关联容器，都以键值对存储数据，但是在底层实现和使用场景上有明显的区别。</p>
+<ol>
+<li>底层实现：</li>
+</ol>
+<ul>
+<li><code>map</code>基于有序的红黑树（自平衡二叉查找树），所有元素按键值有序存储。</li>
+<li><code>unordered_map</code>基于哈希表，元素按照哈希桶存储，不保证顺序。</li>
+</ul>
+<ol start="2">
+<li>时间复杂度</li>
+</ol>
+<ul>
+<li><code>map</code>：查找插入删除都为O (logn)</li>
+<li><code>unordered_map</code>：平均情况下查找插入删除为O(1)，最坏的时候（大量哈希冲突）会退化到O(n)。</li>
+</ul>
+<ol start="3">
+<li>内存开销</li>
+</ol>
+<ul>
+<li><code>map</code>：存储指针和键值对，内存开销比较低。</li>
+<li><code>unordered_map</code>：需要维护哈希表的桶数组，并为每个元素额外存储桶链接或开放地址信息，需要占用更多的内存。</li>
+</ul>
+<ol start="4">
+<li>总结</li>
+</ol>
+<ul>
+<li><code>map</code>：需要有序遍历，内存要求较小</li>
+<li><code>unordered_map</code>：只关心快速查找/插入，不要求顺序。</li>
+</ul>
+<ol start="5">
+<li>扩展知识</li>
+</ol>
+<ul>
+<li>如果是复杂的数据类型，在<code>map</code>中需要自定义比较函数。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> MyKey <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+ <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+ std<span class="token operator">::</span>string name<span class="token punctuation">;</span>
+ <span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token operator">&lt;</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyKey<span class="token operator">&amp;</span> other<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+     <span class="token keyword">return</span> id <span class="token operator">&lt;</span> other<span class="token punctuation">.</span>id<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 按id排序</span>
+ <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>map<span class="token operator">&lt;</span>MyKey<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">></span> m<span class="token punctuation">;</span>
+</code></pre>
+<ul>
+<li>在unordered_map中如果键类型是用户自定义的类型，需要自行提供哈希函数和比较器。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token keyword">struct</span> MyKey <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+ <span class="token keyword">int</span> id<span class="token punctuation">;</span>
+ std<span class="token operator">::</span>string name<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> HashFunction <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+ std<span class="token operator">::</span>size_t <span class="token keyword">operator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyKey<span class="token operator">&amp;</span> k<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+     <span class="token keyword">return</span> std<span class="token operator">::</span>hash<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span>k<span class="token punctuation">.</span>id<span class="token punctuation">)</span> <span class="token operator">^</span> std<span class="token operator">::</span>hash<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span>k<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> KeyEqual <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+ <span class="token keyword">bool</span> <span class="token keyword">operator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">const</span> MyKey<span class="token operator">&amp;</span> lhs<span class="token punctuation">,</span> <span class="token keyword">const</span> MyKey<span class="token operator">&amp;</span> rhs<span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+     <span class="token keyword">return</span> lhs<span class="token punctuation">.</span>id <span class="token operator">==</span> rhs<span class="token punctuation">.</span>id <span class="token operator">&amp;&amp;</span> lhs<span class="token punctuation">.</span>name <span class="token operator">==</span> rhs<span class="token punctuation">.</span>name<span class="token punctuation">;</span>
+ <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+std<span class="token operator">::</span>unordered_map<span class="token operator">&lt;</span>MyKey<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">,</span> HashFunction<span class="token punctuation">,</span> KeyEqual<span class="token operator">></span> um<span class="token punctuation">;</span>
+</code></pre>
 <hr>
 <h2 id="struct-class-union-区别与优化？"><a href="#struct-class-union-区别与优化？" class="headerlink" title="struct/class/union 区别与优化？"></a><code>struct</code>/<code>class</code>/<code>union</code> 区别与优化？</h2><ol>
 <li>三种类型</li>
@@ -1195,14 +1405,100 @@ Color c <span class="token operator">=</span> Red<span class="token punctuation"
 Color c <span class="token operator">=</span> Color<span class="token operator">::</span>Red<span class="token punctuation">;</span>
 </code></pre>
 <hr>
-<h2 id="list-的底层原理和使用场景？"><a href="#list-的底层原理和使用场景？" class="headerlink" title="list 的底层原理和使用场景？"></a><code>list</code> 的底层原理和使用场景？</h2><hr>
+<h2 id="list-使用场景？"><a href="#list-使用场景？" class="headerlink" title="list 使用场景？"></a><code>list</code> 使用场景？</h2><p><code>list</code>是双向链表，适合频繁插入和删除的场景，时间复杂度都是O(1）。<br>💡扩展知识</p>
+<ul>
+<li><p>与其他容器的比较<br><code>vector</code>适合频繁访问和修改元素，但中间插入和删除时效率较低。<br><code>deque</code>特点是双端可以快速插入和删除，同时支持快速访问。<br><code>set</code>和<code>map</code>之类的关联容器可以进行快速查找（基于平衡二叉树），但不适合频繁修改。</p>
+</li>
+<li><p><code>list::sort</code>和<code>std::sort</code><br><code>list</code>有自己实现排序功能的成员函数，在list中实现排序不要用<code>std::sort</code>。两者在底层上有本质不同：</p>
+<ul>
+<li><code>std::sort</code>采用快速排序+堆排序+插入排序三合一算法（平均和最坏复杂度都是O(nlogn)）。</li>
+<li><code>std::list::sort</code>采用归并排序，利用链表可以直接修改节点链接而无需移送数据或<code>swap</code>，属于稳定的排序，时间复杂度也是O(nlogn)。</li>
+</ul>
+</li>
+</ul>
+<p>💡之所以用<code>list::sort</code>不用<code>std::sort</code>是因为<code>std::sort</code>它的使用要求随机访问迭代器，而<code>list</code>只提供双向访问迭代器。而且<code>list::sort</code>的排序稳定，迭代器也比较安全。</p>
 <hr>
+<h2 id="RAII-概念及场景？"><a href="#RAII-概念及场景？" class="headerlink" title="RAII 概念及场景？"></a>RAII 概念及场景？</h2><ol>
+<li>概念<br>RAII，<strong>资源获取即初始化</strong>。核心思想是将资源的获取与对象的生命周期绑定，通过构造函数获取资源，通过析构函数释放资源。</li>
+<li>使用场景</li>
+</ol>
+<ul>
+<li>内存管理：两种智能指针。</li>
+<li>文件操作：<code>std::fstream</code>类在打开文件的时候获取资源，在析构函数中关闭文件。</li>
+<li>互斥锁：<code>lock_guard</code>和<code>unique_lock</code>。</li>
+</ul>
+<hr>
+<h2 id="lock-guard-vs-unique-lock？"><a href="#lock-guard-vs-unique-lock？" class="headerlink" title="lock_guard vs unique_lock？"></a><code>lock_guard</code> vs <code>unique_lock</code>？</h2><ul>
+<li><code>lock_guard</code>很简洁，它唯一的作用就是确保做在作用域结束时自动释放互斥锁。</li>
+</ul>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>mutex mtx<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">example</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+ std<span class="token operator">::</span>lock_guard<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token comment" spellcheck="true">// 互斥锁已经锁定，可以安全地访问共享资源</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 作用域结束，mtx 自动解锁</span>
+</code></pre>
+<ul>
+<li><code>unique_lock</code>提供了更加灵活的锁管理方式，适用于需要延迟锁定、显示解锁和锁所有权转移的场景。</li>
+</ul>
+<ol>
+<li>延迟锁定：可以在构造<code>unique_lock</code>时选择不锁定互斥锁，而是在后续调用<code>lock()</code>方法进行显示锁定。</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>mutex mtx<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">example</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>mtx<span class="token punctuation">,</span> std<span class="token operator">::</span>defer_lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 在需要时显式锁定</span>
+    lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 互斥锁已经锁定，可以安全地访问共享资源</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 作用域结束，mtx 自动解锁</span>
+</code></pre>
+<ol start="2">
+<li>显示解锁：可以在中间需要时显示解锁互斥锁，然后再次锁定。</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>mutex mtx<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">example</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock</span><span class="token punctuation">(</span>mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 访问共享资源</span>
+    lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 互斥锁已解锁</span>
+    <span class="token comment" spellcheck="true">// 其他不能并发访问的操作</span>
+    lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 再次锁定共享资源</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 作用域结束，mtx 自动解锁</span>
+</code></pre>
+<ol start="3">
+<li>锁所有权转移：unique_lock的所有权可以在不同作用域之间转移，在一些需要精准控制锁的生命周期的情景特别有用。</li>
+</ol>
+<pre class=" language-cpp"><code class="language-cpp">std<span class="token operator">::</span>mutex mtx<span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">example</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> <span class="token function">lock1</span><span class="token punctuation">(</span>mtx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 访问共享资源</span>
+    std<span class="token operator">::</span>unique_lock<span class="token operator">&lt;</span>std<span class="token operator">::</span>mutex<span class="token operator">></span> lock2 <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">move</span><span class="token punctuation">(</span>lock1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// lock1 不再拥有互斥锁</span>
+    <span class="token comment" spellcheck="true">// lock2 拥有互斥锁</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// 作用域结束，mtx 自动解锁（如果 lock2 尚未解锁）</span>
+</code></pre>
+<hr>
+<h2 id="strcpy-vs-memcpy？"><a href="#strcpy-vs-memcpy？" class="headerlink" title="strcpy vs memcpy？"></a><code>strcpy</code> vs <code>memcpy</code>？</h2><p>两者都用于复制数据，strcpy用于复制字符串（会复制到遇到终止字符’\0’），memcpy可以复制任意类型的数据。（复制指定字长）</p>
+<pre class=" language-cpp"><code class="language-cpp"><span class="token comment" spellcheck="true">//strcpy</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+
+<span class="token keyword">char</span> src<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"Hello, World!"</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> dest<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token function">strcpy</span><span class="token punctuation">(</span>dest<span class="token punctuation">,</span> src<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//memcpy</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+
+<span class="token keyword">int</span> src<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> dest<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token function">memcpy</span><span class="token punctuation">(</span>dest<span class="token punctuation">,</span> src<span class="token punctuation">,</span> <span class="token number">5</span> <span class="token operator">*</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <hr>
 <h2 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h2><ul>
 <li>运算符重载？</li>
 <li>拷贝构造函数和移动复制运算符？</li>
-<li>RAII 概念及场景？</li>
-<li><code>lock_guard</code> vs <code>unique_lock</code>？</li>
 <li><code>thread</code> join vs detach？</li>
 <li><code>jthread</code> vs <code>thread</code>？</li>
 <li><code>memcpy</code> vs <code>memmove</code>？</li>
@@ -1210,7 +1506,6 @@ Color c <span class="token operator">=</span> Color<span class="token operator">
 <li>C++ 模板优缺点？</li>
 <li>函数模板 vs 类模板？</li>
 <li>SFINAE 原则？</li>
-<li><code>strcpy</code> vs <code>memcpy</code>？</li>
 <li><code>std::array</code> 优点？</li>
 <li>堆内存 vs 栈内存？</li>
 <li>栈溢出？</li>
@@ -1219,7 +1514,6 @@ Color c <span class="token operator">=</span> Color<span class="token operator">
 <li>大端序 vs 小端序？</li>
 <li><code>#include &lt;...&gt;</code> vs <code>#include &quot;...&quot;</code>？</li>
 <li>是否可 include 源文件？</li>
-<li>深拷贝 vs 浅拷贝？写拷贝构造函数？</li>
 <li>命名空间作用？</li>
 <li>友元类和友元函数？</li>
 <li>设计线程安全类？</li>
@@ -1719,7 +2013,7 @@ Color c <span class="token operator">=</span> Color<span class="token operator">
             <br>
             
                 &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                        class="white-color">11.2k</span>
+                        class="white-color">13.3k</span>
             
             
             
